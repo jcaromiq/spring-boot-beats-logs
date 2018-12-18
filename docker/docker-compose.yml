@@ -1,34 +1,5 @@
-version: "3.5"
+version: "3.6"
 services:
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:6.2.4
-    container_name: filebeat
-    user: root
-    volumes:
-      - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml"
-      - "filebeat_data:/usr/share/dockerlogs/data:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock"
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.1
-    container_name: elasticsearch
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-      discovery.zen.minimum_master_nodes: 1
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.5.1
-    container_name: kibana
-    environment:
-      elasticsearch.url: "http://elasticsearch:9200"
-      SERVER_NAME: kibana.example.org
-    ports:
-      - "5601:5601"
-    links:
-      - elasticsearch
 
   javamicroservice:
     build:
@@ -37,8 +8,12 @@ services:
       - JAR_FILE=./build/libs/javamicroservice.jar
     ports:
     - "8080:8080"
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:6.5.1
+    container_name: filebeat
+    user: root
     volumes:
-      - "filebeat_data:/logs/"
-volumes:
-  # create a persistent volume for Filebeat
-  filebeat_data:
+    - "./filebeat/file.yml:/usr/share/filebeat/filebeat.yml"
+    - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
+    - "/var/run/docker.sock:/var/run/docker.sock"

@@ -28,7 +28,7 @@ setup.template.settings:
   index.number_of_shards: 3
 
 setup.kibana:
-  host: "kibana:80"
+  host: "kibana:5601"
   protocol: "http"
   # identification required for X-pack
   username: "my_login"
