@@ -1,44 +1,36 @@
 #==========================  Modules configuration =============================
 filebeat.modules:
 
-
-#========================== Filebeat autodiscover ==============================
-# Autodiscover allows you to detect changes in the system and spawn new modules or inputs as they happen.
 filebeat.autodiscover:
-  # Autodiscover docker containers and parse logs
   providers:
   - type: docker
     templates:
-      config:
-      - type: docker
-        containers.ids:
-        - "${data.docker.container.id}"
+        - condition:
+            contains:
+              docker.container.image: docker_javamicroservice
+          config:
+            - type: docker
+              containers.ids:
+                - "${data.docker.container.id}"
+              processors:
+              - add_docker_metadata: ~
+              json.keys_under_root: false
+              json.add_error_key: true
+             
+
 
 #=========================== Filebeat inputs ==============================
 filebeat.inputs:
 #------------------------------ Docker input --------------------------------
 - type: docker
-  enabled: true
+  enabled: false
   containers.ids:
   - "*"
-  paths:
-  - /var/lib/docker/containers/${data.docker.container.id}/*.log
-  json.message_key: log
-  json.add_error_key: true
-  json.keys_under_root: true
-
-  exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
-  multiline.pattern: "^\t|^[[:space:]]+(at|...)|^Caused by:"
-  multiline.match: after
   processors:
-  - decode_json_fields:
-      fields: ["log"]
-      target: ""
-      # overwrite existing target elasticsearch fields while decoding json fields
-      overwrite_keys: true
   - add_docker_metadata: ~
-  - add_cloud_metadata: ~
-  - add_locale: ~
+  json.keys_under_root: false
+  json.add_error_key: true
+
 
 #========================== Elasticsearch output ===============================
 output.elasticsearch:
