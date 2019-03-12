@@ -8,6 +8,9 @@ build:
 docker-up-ek:
 	docker-compose -f docker/ek-docker-compose.yml up -d
 
+docker-down-ek:
+	docker-compose -f docker/ek-docker-compose.yml down
+
 docker-up:
 	docker-compose -f docker/docker-compose.yml up --build
 

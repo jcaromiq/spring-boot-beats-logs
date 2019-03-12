@@ -14,6 +14,18 @@ services:
     container_name: filebeat
     user: root
     volumes:
-    - "./filebeat/file.yml:/usr/share/filebeat/filebeat.yml"
+    - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml"
     - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
     - "/var/run/docker.sock:/var/run/docker.sock"
+
+# metricbeat:
+#   image: docker.elastic.co/beats/metricbeat:6.5.1
+#   container_name: metricbeat
+#   user: root
+#   volumes:
+#     - "./metricbeat/file.yml:/usr/share/metricbeat/metricbeat.yml"
+#     - "/var/lib/docker/containers/:/var/lib/docker/containers/:ro"
+#     - "/var/run/docker.sock:/var/run/docker.sock"
+#     - "/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro"
+#     - "/proc:/hostfs/proc:ro"
+#     - "/:/hostfs:ro"
