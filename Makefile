@@ -1,6 +1,6 @@
 .PHONY: all build docker-up docker-down docker-up-ek
 
-all: docker-build-ms docker-up
+all: docker-build-ms docker-up-ek docker-up
 
 build:
 	./gradlew build
