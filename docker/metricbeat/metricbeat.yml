@@ -17,6 +17,9 @@ output.elasticsearch:
   hosts: ["elasticsearch:9200"]
   username: "my_login"
   password: "my_password"
+
+setup.dashboards:
+  enabled: true
 setup.kibana:
   host: "kibana:5601"
   username: "my_login"
