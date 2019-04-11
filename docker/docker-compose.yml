@@ -8,7 +8,7 @@ services:
       - "8080:8080"
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:6.5.1
+    image: docker.elastic.co/beats/filebeat:7.0.0
     container_name: filebeat
     user: root
     volumes:
@@ -17,7 +17,7 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
 
   metricbeat:
-    image: docker.elastic.co/beats/metricbeat:6.5.1
+    image: docker.elastic.co/beats/metricbeat:7.0.0
     container_name: metricbeat
     user: root
     volumes:

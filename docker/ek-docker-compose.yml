@@ -1,17 +1,18 @@
 version: "3.6"
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
     container_name: elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      discovery.type: "single-node"
       discovery.zen.minimum_master_nodes: 1
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:6.5.1
+    image: docker.elastic.co/kibana/kibana:7.0.0
     container_name: kibana
     environment:
       elasticsearch.url: "http://elasticsearch:9200"
