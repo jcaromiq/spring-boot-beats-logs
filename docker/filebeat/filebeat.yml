@@ -7,7 +7,7 @@ filebeat.autodiscover:
     templates:
         - condition:
             contains:
-              docker.container.image: docker_javamicroservice
+              docker.container.image: java-ms
           config:
             - type: docker
               containers.ids:
